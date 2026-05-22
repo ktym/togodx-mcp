@@ -1,0 +1,1756 @@
+{
+  "generatedAt": "2026-05-22T07:32:26.460Z",
+  "sourceUrls": {
+    "attributes": "https://raw.githubusercontent.com/togodx/togodx-config-human/develop/config/attributes.dx-server.json",
+    "dataSources": "https://raw.githubusercontent.com/togodx/togodx-config-human/develop/docs/data-sources.md"
+  },
+  "attributes": [
+    {
+      "id": "gene_biotype_ensembl",
+      "label": "Gene biotype",
+      "category": "Gene",
+      "description": "Biotypes of genes annotated in Ensembl",
+      "keywords": [
+        "ensembl_gene",
+        "classification",
+        "Gene",
+        "gene",
+        "genes",
+        "genetic",
+        "Ensembl human release 102: http://nov2020.archive.ensembl.org/Homo_sapiens/Info/Index",
+        "Ensembl"
+      ],
+      "synonyms": [
+        "A gene or transcript classification such as \"protein coding\" and \"lincRNA\". Definition of gene biotypes is described here.",
+        "gene_biotype_ensembl",
+        "ensembl_gene",
+        "Ensembl"
+      ],
+      "dataset": "ensembl_gene",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/gene_biotype_ensembl",
+      "sourceLabels": [
+        "Ensembl"
+      ]
+    },
+    {
+      "id": "gene_chromosome_ensembl",
+      "label": "Chromosome",
+      "category": "Gene",
+      "description": "The chromosome where a gene is located",
+      "keywords": [
+        "ensembl_gene",
+        "classification",
+        "Gene",
+        "gene",
+        "genes",
+        "genetic",
+        "Ensembl Human",
+        "Ensembl"
+      ],
+      "synonyms": [
+        "The chromosome on which each human gene is located.",
+        "gene_chromosome_ensembl",
+        "ensembl_gene",
+        "Ensembl"
+      ],
+      "dataset": "ensembl_gene",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/gene_chromosome_ensembl",
+      "sourceLabels": [
+        "Ensembl"
+      ]
+    },
+    {
+      "id": "gene_number_of_paralogs_homologene",
+      "label": "# of paralogs",
+      "category": "Gene",
+      "description": "The number of paralogs calculated based on HomoloGene",
+      "keywords": [
+        "ncbigene",
+        "classification",
+        "Gene",
+        "gene",
+        "genes",
+        "genetic",
+        "HomoloGene Release 68",
+        "https://www.ncbi.nlm.nih.gov/homologene/statistics/",
+        "HomoloGene"
+      ],
+      "synonyms": [
+        "gene_number_of_paralogs_homologene",
+        "ncbigene",
+        "HomoloGene"
+      ],
+      "dataset": "ncbigene",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/gene_number_of_paralogs_homologene",
+      "sourceLabels": [
+        "HomoloGene"
+      ]
+    },
+    {
+      "id": "gene_ortholog_existence_homologene",
+      "label": "Ortholog existence",
+      "category": "Gene",
+      "description": "Ortholog existence for each human gene in other organisms defined by HomoloGene",
+      "keywords": [
+        "ncbigene",
+        "classification",
+        "Gene",
+        "gene",
+        "genes",
+        "genetic",
+        "HomoloGene"
+      ],
+      "synonyms": [
+        "gene_ortholog_existence_homologene",
+        "ncbigene",
+        "HomoloGene"
+      ],
+      "dataset": "ncbigene",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/gene_ortholog_existence_homologene",
+      "sourceLabels": [
+        "HomoloGene"
+      ]
+    },
+    {
+      "id": "gene_evolutionary_conservation_homologene",
+      "label": "Evolutionary divergence",
+      "category": "Gene",
+      "description": "The most distant organisms from human that have orthologous genes in HomoloGene",
+      "keywords": [
+        "ncbigene",
+        "classification",
+        "Gene",
+        "gene",
+        "genes",
+        "genetic",
+        "HomoloGene Release 68: https://www.ncbi.nlm.nih.gov/homologene/statistics/",
+        "HomoloGene"
+      ],
+      "synonyms": [
+        "gene_evolutionary_conservation_homologene",
+        "ncbigene",
+        "HomoloGene"
+      ],
+      "dataset": "ncbigene",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/gene_evolutionary_conservation_homologene",
+      "sourceLabels": [
+        "HomoloGene"
+      ]
+    },
+    {
+      "id": "gene_biological_process_ncbigene",
+      "label": "Biological process",
+      "category": "Gene",
+      "description": "Functional annotations (GO terms) derived from the Biological process category of Gene Ontology, which GOA has assigned to each human gene with evidence information",
+      "keywords": [
+        "ncbigene",
+        "classification",
+        "Gene",
+        "gene",
+        "genes",
+        "genetic",
+        "NCBI Gene"
+      ],
+      "synonyms": [
+        "gene_biological_process_ncbigene",
+        "ncbigene",
+        "NCBI Gene"
+      ],
+      "dataset": "ncbigene",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/gene_biological_process_ncbigene",
+      "sourceLabels": [
+        "NCBI Gene"
+      ]
+    },
+    {
+      "id": "gene_cellular_component_ncbigene",
+      "label": "Cellular component",
+      "category": "Gene",
+      "description": "Functional annotations (GO terms) derived from the Cellular component category of Gene Ontology, which GOA has assigned to each human gene with evidence information",
+      "keywords": [
+        "ncbigene",
+        "classification",
+        "Gene",
+        "gene",
+        "genes",
+        "genetic",
+        "NCBI Gene"
+      ],
+      "synonyms": [
+        "gene_cellular_component_ncbigene",
+        "ncbigene",
+        "NCBI Gene"
+      ],
+      "dataset": "ncbigene",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/gene_cellular_component_ncbigene",
+      "sourceLabels": [
+        "NCBI Gene"
+      ]
+    },
+    {
+      "id": "gene_molecular_function_ncbigene",
+      "label": "Molecular function",
+      "category": "Gene",
+      "description": "Functional annotations (GO terms) derived from the Molecular function category of Gene Ontology, which GOA has assigned to each human gene with evidence information",
+      "keywords": [
+        "ncbigene",
+        "classification",
+        "Gene",
+        "gene",
+        "genes",
+        "genetic",
+        "NCBI Gene"
+      ],
+      "synonyms": [
+        "gene_molecular_function_ncbigene",
+        "ncbigene",
+        "NCBI Gene"
+      ],
+      "dataset": "ncbigene",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/gene_molecular_function_ncbigene",
+      "sourceLabels": [
+        "NCBI Gene"
+      ]
+    },
+    {
+      "id": "gene_high_level_expression_refex",
+      "label": "Tissue-specific high expression (RefEx GeneChip)",
+      "category": "Gene",
+      "description": "Tissues in which a gene was tissue-specific highly expressed in 34 tissues of RefEx(GeneChip microarray)",
+      "keywords": [
+        "ncbigene",
+        "classification",
+        "Gene",
+        "gene",
+        "genes",
+        "genetic",
+        "Calculations for tissue specificity of genechip human GSE7307 from RefEx"
+      ],
+      "synonyms": [
+        "gene_high_level_expression_refex",
+        "ncbigene",
+        "Calculations for tissue specificity of genechip human GSE7307 from RefEx"
+      ],
+      "dataset": "ncbigene",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/gene_high_level_expression_refex",
+      "sourceLabels": [
+        "Calculations for tissue specificity of genechip human GSE7307 from RefEx"
+      ]
+    },
+    {
+      "id": "gene_low_level_expression_refex",
+      "label": "Tissue-specific low expression (RefEx GeneChip)",
+      "category": "Gene",
+      "description": "Tissues in which a gene was tissue-specific lowly expressed in 34 tissues of RefEx(GeneChip microarray)",
+      "keywords": [
+        "ncbigene",
+        "classification",
+        "Gene",
+        "gene",
+        "genes",
+        "genetic",
+        "Calculations for tissue specificity of genechip human GSE7307 from RefEx"
+      ],
+      "synonyms": [
+        "gene_low_level_expression_refex",
+        "ncbigene",
+        "Calculations for tissue specificity of genechip human GSE7307 from RefEx"
+      ],
+      "dataset": "ncbigene",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/gene_low_level_expression_refex",
+      "sourceLabels": [
+        "Calculations for tissue specificity of genechip human GSE7307 from RefEx"
+      ]
+    },
+    {
+      "id": "gene_high_level_expression_gtex6",
+      "label": "Tissue-specific high expression (GTEx)",
+      "category": "Gene",
+      "description": "Tissues in which a gene is tissue-specific highly expressed in 49 tissues of GTEx V6",
+      "keywords": [
+        "ensembl_gene",
+        "classification",
+        "Gene",
+        "gene",
+        "genes",
+        "genetic",
+        "GTEx"
+      ],
+      "synonyms": [
+        "gene_high_level_expression_gtex6",
+        "ensembl_gene",
+        "GTEx"
+      ],
+      "dataset": "ensembl_gene",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/gene_high_level_expression_gtex6",
+      "sourceLabels": [
+        "GTEx"
+      ]
+    },
+    {
+      "id": "gene_not_expressed_in_tissues_gtex",
+      "label": "No expression in tissues (GTEx)",
+      "category": "Gene",
+      "description": "Tissues in which expression of a gene is not detected in 53 tissues of GTEx V8",
+      "keywords": [
+        "ensembl_gene",
+        "classification",
+        "Gene",
+        "gene",
+        "genes",
+        "genetic",
+        "GTEx"
+      ],
+      "synonyms": [
+        "gene_not_expressed_in_tissues_gtex",
+        "ensembl_gene",
+        "GTEx"
+      ],
+      "dataset": "ensembl_gene",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/gene_not_expressed_in_tissues_gtex",
+      "sourceLabels": [
+        "GTEx"
+      ]
+    },
+    {
+      "id": "gene_specific_expression_in_tissues_hpa",
+      "label": "Tissue-specific high expression (HPA)",
+      "category": "Gene",
+      "description": "Tissues in which expression specificity of a gene is evaluated as \"Tissue enriched\", \"Tissue enhanced\", or \"Group enriched\" by Human Protein Atlas",
+      "keywords": [
+        "ensembl_gene",
+        "classification",
+        "Gene",
+        "gene",
+        "genes",
+        "genetic",
+        "HPA (Data from the Human Protein Atlas in tab-separated format)"
+      ],
+      "synonyms": [
+        "gene_specific_expression_in_tissues_hpa",
+        "ensembl_gene",
+        "HPA (Data from the Human Protein Atlas in tab-separated format)"
+      ],
+      "dataset": "ensembl_gene",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/gene_specific_expression_in_tissues_hpa",
+      "sourceLabels": [
+        "HPA (Data from the Human Protein Atlas in tab-separated format)"
+      ]
+    },
+    {
+      "id": "gene_specific_expression_in_cells_hpa",
+      "label": "Cell type-specific high expression (HPA)",
+      "category": "Gene",
+      "description": "Cell types in which expression specificity of a gene is evaluated as \"Cell type enriched\", \"Cell type enhanced\", or \"Group enriched\" by Human Protein Atlas",
+      "keywords": [
+        "ensembl_gene",
+        "classification",
+        "Gene",
+        "gene",
+        "genes",
+        "genetic",
+        "HPA (Data from the Human Protein Atlas in tab-separated format)"
+      ],
+      "synonyms": [
+        "gene_specific_expression_in_cells_hpa",
+        "ensembl_gene",
+        "HPA (Data from the Human Protein Atlas in tab-separated format)"
+      ],
+      "dataset": "ensembl_gene",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/gene_specific_expression_in_cells_hpa",
+      "sourceLabels": [
+        "HPA (Data from the Human Protein Atlas in tab-separated format)"
+      ]
+    },
+    {
+      "id": "transcript_biotype_ensembl",
+      "label": "Transcript biotype",
+      "category": "Gene",
+      "description": "Transcript classification annotated in Ensembl",
+      "keywords": [
+        "ensembl_transcript",
+        "classification",
+        "Gene",
+        "gene",
+        "genes",
+        "genetic",
+        "Ensembl"
+      ],
+      "synonyms": [
+        "transcript_biotype_ensembl",
+        "ensembl_transcript",
+        "Ensembl"
+      ],
+      "dataset": "ensembl_transcript",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/transcript_biotype_ensembl",
+      "sourceLabels": [
+        "Ensembl"
+      ]
+    },
+    {
+      "id": "transcript_length_ensembl",
+      "label": "Transcript length",
+      "category": "Gene",
+      "description": "Transcript length (bp) based on Ensembl",
+      "keywords": [
+        "ensembl_transcript",
+        "distribution",
+        "Gene",
+        "gene",
+        "genes",
+        "genetic",
+        "Ensembl"
+      ],
+      "synonyms": [
+        "transcript_length_ensembl",
+        "ensembl_transcript",
+        "Ensembl"
+      ],
+      "dataset": "ensembl_transcript",
+      "datamodel": "distribution",
+      "api": "https://togodx.dbcls.jp/human/breakdown/transcript_length_ensembl",
+      "sourceLabels": [
+        "Ensembl"
+      ]
+    },
+    {
+      "id": "protein_uniprotkb_section_uniprot",
+      "label": "UniProtKB sections",
+      "category": "Protein",
+      "description": "Protein sections consisting of manually annotated UniProtKB/Swiss-Prot and automatically annotated UniProtKB/TrEMBL",
+      "keywords": [
+        "uniprot",
+        "classification",
+        "Protein",
+        "protein",
+        "proteins",
+        "UniProt"
+      ],
+      "synonyms": [
+        "protein_uniprotkb_section_uniprot",
+        "uniprot",
+        "UniProt"
+      ],
+      "dataset": "uniprot",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/protein_uniprotkb_section_uniprot",
+      "sourceLabels": [
+        "UniProt"
+      ]
+    },
+    {
+      "id": "protein_domains_uniprot",
+      "label": "Protein domains",
+      "category": "Protein",
+      "description": "Protein domains from UniProt",
+      "keywords": [
+        "uniprot",
+        "classification",
+        "Protein",
+        "protein",
+        "proteins",
+        "UniProt",
+        "For details about UniProt Keywords, see UniProt documentation."
+      ],
+      "synonyms": [
+        "protein_domains_uniprot",
+        "uniprot",
+        "UniProt"
+      ],
+      "dataset": "uniprot",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/protein_domains_uniprot",
+      "sourceLabels": [
+        "UniProt"
+      ]
+    },
+    {
+      "id": "protein_biological_process_uniprot",
+      "label": "Biological process",
+      "category": "Protein",
+      "description": "Gene ontology biological process annotation from UniProt",
+      "keywords": [
+        "uniprot",
+        "classification",
+        "Protein",
+        "protein",
+        "proteins",
+        "UniProt",
+        "Gene ontology biological process annotation from UniProt"
+      ],
+      "synonyms": [
+        "protein_biological_process_uniprot",
+        "uniprot",
+        "Gene ontology biological process annotation from UniProt"
+      ],
+      "dataset": "uniprot",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/protein_biological_process_uniprot",
+      "sourceLabels": [
+        "Gene ontology biological process annotation from UniProt"
+      ]
+    },
+    {
+      "id": "protein_cellular_component_uniprot",
+      "label": "Cellular component",
+      "category": "Protein",
+      "description": "Gene ontology cellular component annotation from UniProt",
+      "keywords": [
+        "uniprot",
+        "classification",
+        "Protein",
+        "protein",
+        "proteins",
+        "UniProt",
+        "Gene ontology cellular component annotation from UniProt"
+      ],
+      "synonyms": [
+        "protein_cellular_component_uniprot",
+        "uniprot",
+        "Gene ontology cellular component annotation from UniProt"
+      ],
+      "dataset": "uniprot",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/protein_cellular_component_uniprot",
+      "sourceLabels": [
+        "Gene ontology cellular component annotation from UniProt"
+      ]
+    },
+    {
+      "id": "protein_molecular_function_uniprot",
+      "label": "Molecular function",
+      "category": "Protein",
+      "description": "Gene ontology molecular function annotation from UniProt",
+      "keywords": [
+        "uniprot",
+        "classification",
+        "Protein",
+        "protein",
+        "proteins",
+        "UniProt",
+        "Gene ontology molecular function annotation from UniProt"
+      ],
+      "synonyms": [
+        "protein_molecular_function_uniprot",
+        "uniprot",
+        "Gene ontology molecular function annotation from UniProt"
+      ],
+      "dataset": "uniprot",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/protein_molecular_function_uniprot",
+      "sourceLabels": [
+        "Gene ontology molecular function annotation from UniProt"
+      ]
+    },
+    {
+      "id": "protein_isoform_specific_go_existence_nextprot",
+      "label": "Isoform specific go existence",
+      "category": "Protein",
+      "description": "GO classification of proteins with isoform-specific GO annotations from UniProt",
+      "keywords": [
+        "uniprot",
+        "classification",
+        "Protein",
+        "protein",
+        "proteins",
+        "Isoform SPECIFIC annotation from neXtProt"
+      ],
+      "synonyms": [
+        "protein_isoform_specific_go_existence_nextprot",
+        "uniprot",
+        "Isoform SPECIFIC annotation from neXtProt"
+      ],
+      "dataset": "uniprot",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/protein_isoform_specific_go_existence_nextprot",
+      "sourceLabels": [
+        "Isoform SPECIFIC annotation from neXtProt"
+      ]
+    },
+    {
+      "id": "protein_ligands_uniprot",
+      "label": "Ligands",
+      "category": "Protein",
+      "description": "Ligand bindings from UniProt",
+      "keywords": [
+        "uniprot",
+        "classification",
+        "Protein",
+        "protein",
+        "proteins",
+        "UniProt",
+        "For details about UniProt Keywords, see UniProt documentation.",
+        "Function from UniProt"
+      ],
+      "synonyms": [
+        "protein_ligands_uniprot",
+        "uniprot",
+        "Function from UniProt"
+      ],
+      "dataset": "uniprot",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/protein_ligands_uniprot",
+      "sourceLabels": [
+        "Function from UniProt"
+      ]
+    },
+    {
+      "id": "protein_molecular_mass_uniprot",
+      "label": "Molecular mass",
+      "category": "Protein",
+      "description": "Molecular mass from UniProt",
+      "keywords": [
+        "uniprot",
+        "distribution",
+        "Protein",
+        "protein",
+        "proteins",
+        "UniProt",
+        "Sequences from UniProt"
+      ],
+      "synonyms": [
+        "protein_molecular_mass_uniprot",
+        "uniprot",
+        "Sequences from UniProt"
+      ],
+      "dataset": "uniprot",
+      "datamodel": "distribution",
+      "api": "https://togodx.dbcls.jp/human/breakdown/protein_molecular_mass_uniprot",
+      "sourceLabels": [
+        "Sequences from UniProt"
+      ]
+    },
+    {
+      "id": "protein_ptms_uniprot",
+      "label": "PTMs",
+      "category": "Protein",
+      "description": "Post-translational modifications from UniProt",
+      "keywords": [
+        "uniprot",
+        "classification",
+        "Protein",
+        "protein",
+        "proteins",
+        "UniProt",
+        "For details about UniProt Keywords, see UniProt documentation.",
+        "Amino acid modifications from UniProt"
+      ],
+      "synonyms": [
+        "protein_ptms_uniprot",
+        "uniprot",
+        "Amino acid modifications from UniProt"
+      ],
+      "dataset": "uniprot",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/protein_ptms_uniprot",
+      "sourceLabels": [
+        "Amino acid modifications from UniProt"
+      ]
+    },
+    {
+      "id": "protein_catalytic_activity_uniprot",
+      "label": "Catalytic activity",
+      "category": "Protein",
+      "description": "Classification by catalytic activity, based on the Enzyme Committee (EC) number",
+      "keywords": [
+        "uniprot",
+        "classification",
+        "Protein",
+        "protein",
+        "proteins",
+        "Catalytic activity from UniProt"
+      ],
+      "synonyms": [
+        "protein_catalytic_activity_uniprot",
+        "uniprot",
+        "Catalytic activity from UniProt"
+      ],
+      "dataset": "uniprot",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/protein_catalytic_activity_uniprot",
+      "sourceLabels": [
+        "Catalytic activity from UniProt"
+      ]
+    },
+    {
+      "id": "protein_number_of_transmembrane_domains_uniprot",
+      "label": "# of transmembrane domains",
+      "category": "Protein",
+      "description": "The number of transmembrane segments from UniProt",
+      "keywords": [
+        "uniprot",
+        "distribution",
+        "Protein",
+        "protein",
+        "proteins",
+        "UniProt",
+        "Topology from UniProt"
+      ],
+      "synonyms": [
+        "protein_number_of_transmembrane_domains_uniprot",
+        "uniprot",
+        "Topology from UniProt"
+      ],
+      "dataset": "uniprot",
+      "datamodel": "distribution",
+      "api": "https://togodx.dbcls.jp/human/breakdown/protein_number_of_transmembrane_domains_uniprot",
+      "sourceLabels": [
+        "Topology from UniProt"
+      ]
+    },
+    {
+      "id": "protein_number_of_phosphorylation_sites_uniprot",
+      "label": "# of phosphorylation sites",
+      "category": "Protein",
+      "description": "The number of phosphorylation sites from UniProt",
+      "keywords": [
+        "uniprot",
+        "distribution",
+        "Protein",
+        "protein",
+        "proteins",
+        "UniProt",
+        "Amino acid modifications from UniProt"
+      ],
+      "synonyms": [
+        "protein_number_of_phosphorylation_sites_uniprot",
+        "uniprot",
+        "Amino acid modifications from UniProt"
+      ],
+      "dataset": "uniprot",
+      "datamodel": "distribution",
+      "api": "https://togodx.dbcls.jp/human/breakdown/protein_number_of_phosphorylation_sites_uniprot",
+      "sourceLabels": [
+        "Amino acid modifications from UniProt"
+      ]
+    },
+    {
+      "id": "protein_number_of_glycosylation_sites_uniprot",
+      "label": "# of glycosylation sites",
+      "category": "Protein",
+      "description": "The number of glycosylation sites from UniProt",
+      "keywords": [
+        "uniprot",
+        "distribution",
+        "Protein",
+        "protein",
+        "proteins",
+        "UniProt",
+        "Amino acid modifications from UniProt"
+      ],
+      "synonyms": [
+        "protein_number_of_glycosylation_sites_uniprot",
+        "uniprot",
+        "Amino acid modifications from UniProt"
+      ],
+      "dataset": "uniprot",
+      "datamodel": "distribution",
+      "api": "https://togodx.dbcls.jp/human/breakdown/protein_number_of_glycosylation_sites_uniprot",
+      "sourceLabels": [
+        "Amino acid modifications from UniProt"
+      ]
+    },
+    {
+      "id": "protein_disease_related_proteins_uniprot",
+      "label": "Disease-related proteins",
+      "category": "Protein",
+      "description": "Disease-related proteins from UniProt",
+      "keywords": [
+        "uniprot",
+        "classification",
+        "Protein",
+        "protein",
+        "proteins",
+        "UniProt",
+        "For details about UniProt Keywords, see UniProt documentation.",
+        "Pathology & Biotech from UniProt"
+      ],
+      "synonyms": [
+        "protein_disease_related_proteins_uniprot",
+        "uniprot",
+        "Pathology & Biotech from UniProt"
+      ],
+      "dataset": "uniprot",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/protein_disease_related_proteins_uniprot",
+      "sourceLabels": [
+        "Pathology & Biotech from UniProt"
+      ]
+    },
+    {
+      "id": "protein_isolation_source_uniprot",
+      "label": "Tissues w/expression reported",
+      "category": "Protein",
+      "description": "Classification based on the name of the tissue from which the clone was isolated in the reference describing the protein sequence in Tissue section from UniProt",
+      "keywords": [
+        "uniprot",
+        "classification",
+        "Protein",
+        "protein",
+        "proteins",
+        "Tissue from UniProt"
+      ],
+      "synonyms": [
+        "protein_isolation_source_uniprot",
+        "uniprot",
+        "Tissue from UniProt"
+      ],
+      "dataset": "uniprot",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/protein_isolation_source_uniprot",
+      "sourceLabels": [
+        "Tissue from UniProt"
+      ]
+    },
+    {
+      "id": "protein_evidence_of_existence_nextprot",
+      "label": "Evidence of existence",
+      "category": "Protein",
+      "description": "Protein existence obtained from neXtProt",
+      "keywords": [
+        "uniprot",
+        "classification",
+        "Protein",
+        "protein",
+        "proteins",
+        "Expression from neXtProt"
+      ],
+      "synonyms": [
+        "protein_evidence_of_existence_nextprot",
+        "uniprot",
+        "Expression from neXtProt"
+      ],
+      "dataset": "uniprot",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/protein_evidence_of_existence_nextprot",
+      "sourceLabels": [
+        "Expression from neXtProt"
+      ]
+    },
+    {
+      "id": "protein_isoform_specific_interaction_existence_nextprot",
+      "label": "Isoform specific interaction existence",
+      "category": "Protein",
+      "description": "Proteins with isoform-specific PPI annotations from UniProt",
+      "keywords": [
+        "uniprot",
+        "classification",
+        "Protein",
+        "protein",
+        "proteins",
+        "Isoform SPECIFIC annotation from neXtProt"
+      ],
+      "synonyms": [
+        "protein_isoform_specific_interaction_existence_nextprot",
+        "uniprot",
+        "Isoform SPECIFIC annotation from neXtProt"
+      ],
+      "dataset": "uniprot",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/protein_isoform_specific_interaction_existence_nextprot",
+      "sourceLabels": [
+        "Isoform SPECIFIC annotation from neXtProt"
+      ]
+    },
+    {
+      "id": "protein_pathway_annotation_uniprot",
+      "label": "Pathway annotation",
+      "category": "Protein",
+      "description": "Classification by reaction, based on Uniprot pathways",
+      "keywords": [
+        "uniprot",
+        "classification",
+        "Protein",
+        "protein",
+        "proteins",
+        "Pathway from UniProt"
+      ],
+      "synonyms": [
+        "protein_pathway_annotation_uniprot",
+        "uniprot",
+        "Pathway from UniProt"
+      ],
+      "dataset": "uniprot",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/protein_pathway_annotation_uniprot",
+      "sourceLabels": [
+        "Pathway from UniProt"
+      ]
+    },
+    {
+      "id": "structure_data_existence_uniprot",
+      "label": "Structure data existence",
+      "category": "Structure",
+      "description": "Uniprot entries with links to PDB data entries",
+      "keywords": [
+        "uniprot",
+        "classification",
+        "Structure",
+        "structure",
+        "protein structure",
+        "3d structure",
+        "Uniprot entries with links to PDB data entries",
+        "This item based on the data of March, 2021 of uniprot (human only).",
+        "Structure from Uniprot"
+      ],
+      "synonyms": [
+        "structure_data_existence_uniprot",
+        "uniprot",
+        "Structure from Uniprot"
+      ],
+      "dataset": "uniprot",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/structure_data_existence_uniprot",
+      "sourceLabels": [
+        "Structure from Uniprot"
+      ]
+    },
+    {
+      "id": "structure_helical_regions_uniprot",
+      "label": "Rate of helical regions",
+      "category": "Structure",
+      "description": "Rate of helical regions in each entry of UniProt",
+      "keywords": [
+        "uniprot",
+        "distribution",
+        "Structure",
+        "structure",
+        "protein structure",
+        "3d structure",
+        "Structure from Uniprot"
+      ],
+      "synonyms": [
+        "structure_helical_regions_uniprot",
+        "uniprot",
+        "Structure from Uniprot"
+      ],
+      "dataset": "uniprot",
+      "datamodel": "distribution",
+      "api": "https://togodx.dbcls.jp/human/breakdown/structure_helical_regions_uniprot",
+      "sourceLabels": [
+        "Structure from Uniprot"
+      ]
+    },
+    {
+      "id": "structure_beta_strand_regions_uniprot",
+      "label": "Rate of beta strand regions",
+      "category": "Structure",
+      "description": "Rate of beta strand regions in each entry of UniProt",
+      "keywords": [
+        "uniprot",
+        "distribution",
+        "Structure",
+        "structure",
+        "protein structure",
+        "3d structure",
+        "Structure from Uniprot"
+      ],
+      "synonyms": [
+        "structure_beta_strand_regions_uniprot",
+        "uniprot",
+        "Structure from Uniprot"
+      ],
+      "dataset": "uniprot",
+      "datamodel": "distribution",
+      "api": "https://togodx.dbcls.jp/human/breakdown/structure_beta_strand_regions_uniprot",
+      "sourceLabels": [
+        "Structure from Uniprot"
+      ]
+    },
+    {
+      "id": "structure_number_of_turns_uniprot",
+      "label": "# of turn structures",
+      "category": "Structure",
+      "description": "Number of turn structures from UniProt",
+      "keywords": [
+        "uniprot",
+        "distribution",
+        "Structure",
+        "structure",
+        "protein structure",
+        "3d structure",
+        "Structure from Uniprot"
+      ],
+      "synonyms": [
+        "structure_number_of_turns_uniprot",
+        "uniprot",
+        "Structure from Uniprot"
+      ],
+      "dataset": "uniprot",
+      "datamodel": "distribution",
+      "api": "https://togodx.dbcls.jp/human/breakdown/structure_number_of_turns_uniprot",
+      "sourceLabels": [
+        "Structure from Uniprot"
+      ]
+    },
+    {
+      "id": "structure_number_of_disulfide_bonds_uniprot",
+      "label": "# of disulfide bonds",
+      "category": "Structure",
+      "description": "Number of disulfide bounds from UniProt",
+      "keywords": [
+        "uniprot",
+        "distribution",
+        "Structure",
+        "structure",
+        "protein structure",
+        "3d structure",
+        "Structure from Uniprot"
+      ],
+      "synonyms": [
+        "structure_number_of_disulfide_bonds_uniprot",
+        "uniprot",
+        "Structure from Uniprot"
+      ],
+      "dataset": "uniprot",
+      "datamodel": "distribution",
+      "api": "https://togodx.dbcls.jp/human/breakdown/structure_number_of_disulfide_bonds_uniprot",
+      "sourceLabels": [
+        "Structure from Uniprot"
+      ]
+    },
+    {
+      "id": "structure_disorder_annotation_uniprot",
+      "label": "Rate of disorder regions",
+      "category": "Structure",
+      "description": "Rate of disorder regions in each entry of UniProt",
+      "keywords": [
+        "uniprot",
+        "distribution",
+        "Structure",
+        "structure",
+        "protein structure",
+        "3d structure",
+        "Structure from Uniprot"
+      ],
+      "synonyms": [
+        "structure_disorder_annotation_uniprot",
+        "uniprot",
+        "Structure from Uniprot"
+      ],
+      "dataset": "uniprot",
+      "datamodel": "distribution",
+      "api": "https://togodx.dbcls.jp/human/breakdown/structure_disorder_annotation_uniprot",
+      "sourceLabels": [
+        "Structure from Uniprot"
+      ]
+    },
+    {
+      "id": "structure_number_of_peptides_pdb",
+      "label": "# of peptides in a PDB entry",
+      "category": "Structure",
+      "description": "The number of peptides in a PDB entry",
+      "keywords": [
+        "pdb",
+        "distribution",
+        "Structure",
+        "structure",
+        "protein structure",
+        "3d structure",
+        "Number of peptides contained in one PDB entry",
+        "This item based on the data of January 20, 2021 of PDBj.",
+        "The latest data can be obtained from the URL below. https://data.pdbj.org/pdbjplus/data/pdb/rdf/",
+        "Entity from PDB"
+      ],
+      "synonyms": [
+        "structure_number_of_peptides_pdb",
+        "pdb",
+        "Entity from PDB"
+      ],
+      "dataset": "pdb",
+      "datamodel": "distribution",
+      "api": "https://togodx.dbcls.jp/human/breakdown/structure_number_of_peptides_pdb",
+      "sourceLabels": [
+        "Entity from PDB"
+      ]
+    },
+    {
+      "id": "structure_analysis_methods_pdb",
+      "label": "Analysis methods",
+      "category": "Structure",
+      "description": "Structure determination methods in PDB",
+      "keywords": [
+        "pdb",
+        "classification",
+        "Structure",
+        "structure",
+        "protein structure",
+        "3d structure",
+        "Experimental methods used for 3D structure acquisition in the PDB entry.",
+        "This item based on the data of January 20, 2021 of PDBj.",
+        "The latest data can be obtained from the URL below. https://data.pdbj.org/pdbjplus/data/pdb/rdf/",
+        "Experimental method from PDB"
+      ],
+      "synonyms": [
+        "structure_analysis_methods_pdb",
+        "pdb",
+        "Experimental method from PDB"
+      ],
+      "dataset": "pdb",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/structure_analysis_methods_pdb",
+      "sourceLabels": [
+        "Experimental method from PDB"
+      ]
+    },
+    {
+      "id": "interaction_proteins_in_pathway_reactome",
+      "label": "Proteins in pathway",
+      "category": "Interaction",
+      "description": "The number of proteins in each pathway from Reactome",
+      "keywords": [
+        "uniprot",
+        "classification",
+        "Interaction",
+        "interaction",
+        "interactions",
+        "pathway",
+        "pathways",
+        "Reactome-classified pathways for each protein",
+        "This item based on the data of Reactome Version 71 (02, December 2019).",
+        "The latest data can be obtained from the URL below. https://reactome.org/download-data",
+        "Reactome"
+      ],
+      "synonyms": [
+        "interaction_proteins_in_pathway_reactome",
+        "uniprot",
+        "Reactome"
+      ],
+      "dataset": "uniprot",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/interaction_proteins_in_pathway_reactome",
+      "sourceLabels": [
+        "Reactome"
+      ]
+    },
+    {
+      "id": "interaction_compounds_in_pathway_reactome",
+      "label": "Compounds in pathway",
+      "category": "Interaction",
+      "description": "The number of chemical compounds in each pathway from Reactome",
+      "keywords": [
+        "chebi",
+        "classification",
+        "Interaction",
+        "interaction",
+        "interactions",
+        "pathway",
+        "pathways",
+        "Reactome-classified pathways for each chemical compound",
+        "This item based on the data of Reactome Version 71 (02, December 2019).",
+        "The latest data can be obtained from the URL below. https://reactome.org/download-data",
+        "Reactome"
+      ],
+      "synonyms": [
+        "interaction_compounds_in_pathway_reactome",
+        "chebi",
+        "Reactome"
+      ],
+      "dataset": "chebi",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/interaction_compounds_in_pathway_reactome",
+      "sourceLabels": [
+        "Reactome"
+      ]
+    },
+    {
+      "id": "interaction_number_of_interacting_proteins_uniprot",
+      "label": "# of interacting proteins",
+      "category": "Interaction",
+      "description": "The number of interacting proteins from UniProt",
+      "keywords": [
+        "uniprot",
+        "distribution",
+        "Interaction",
+        "interaction",
+        "interactions",
+        "pathway",
+        "pathways",
+        "The number of interacting proteins from UniProt",
+        "This item based on the data of March, 2021 of UniProt (human only).",
+        "Interaction from UniProt"
+      ],
+      "synonyms": [
+        "interaction_number_of_interacting_proteins_uniprot",
+        "uniprot",
+        "Interaction from UniProt"
+      ],
+      "dataset": "uniprot",
+      "datamodel": "distribution",
+      "api": "https://togodx.dbcls.jp/human/breakdown/interaction_number_of_interacting_proteins_uniprot",
+      "sourceLabels": [
+        "Interaction from UniProt"
+      ]
+    },
+    {
+      "id": "interaction_chembl_assay_existence_uniprot",
+      "label": "ChEMBL assay existence",
+      "category": "Interaction",
+      "description": "Proteins with or without ChEMBL assay from Uniprot",
+      "keywords": [
+        "uniprot",
+        "classification",
+        "Interaction",
+        "interaction",
+        "interactions",
+        "pathway",
+        "pathways",
+        "Proteins with or without ChEMBL assay from UniProt",
+        "ChEMBL-RDF 28.0: http://ftp.ebi.ac.uk/pub/databases/chembl/ChEMBL-RDF/",
+        "Target protein from ChEMBL-RDF against all UniProt entries"
+      ],
+      "synonyms": [
+        "interaction_chembl_assay_existence_uniprot",
+        "uniprot",
+        "Target protein from ChEMBL-RDF against all UniProt entries"
+      ],
+      "dataset": "uniprot",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/interaction_chembl_assay_existence_uniprot",
+      "sourceLabels": [
+        "Target protein from ChEMBL-RDF against all UniProt entries"
+      ]
+    },
+    {
+      "id": "compound_chemical_role_chebi",
+      "label": "Chemical role",
+      "category": "Compound",
+      "description": "Chemical roles in ChEBI",
+      "keywords": [
+        "chebi",
+        "classification",
+        "Compound",
+        "compound",
+        "compounds",
+        "drug",
+        "drugs",
+        "chebi_compound",
+        "Chemical Entities of Biological Interest (ChEBI)",
+        "Chemical role from ChEBI"
+      ],
+      "synonyms": [
+        "compound_chemical_role_chebi",
+        "chebi",
+        "Chemical role from ChEBI"
+      ],
+      "dataset": "chebi",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/compound_chemical_role_chebi",
+      "sourceLabels": [
+        "Chemical role from ChEBI"
+      ]
+    },
+    {
+      "id": "compound_application_type_chebi",
+      "label": "Application type",
+      "category": "Compound",
+      "description": "Application types in ChEBI",
+      "keywords": [
+        "chebi",
+        "classification",
+        "Compound",
+        "compound",
+        "compounds",
+        "drug",
+        "drugs",
+        "chebi_compound",
+        "Chemical Entities of Biological Interest (ChEBI)",
+        "Application type from ChEBI"
+      ],
+      "synonyms": [
+        "compound_application_type_chebi",
+        "chebi",
+        "Application type from ChEBI"
+      ],
+      "dataset": "chebi",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/compound_application_type_chebi",
+      "sourceLabels": [
+        "Application type from ChEBI"
+      ]
+    },
+    {
+      "id": "compound_action_type_chembl",
+      "label": "Action type",
+      "category": "Compound",
+      "description": "Mechanism action types in ChEMBL",
+      "keywords": [
+        "chembl_compound",
+        "classification",
+        "Compound",
+        "compound",
+        "compounds",
+        "drug",
+        "drugs",
+        "(More data sources description goes here..)",
+        "ChEMBL-RDF 28.0: http://ftp.ebi.ac.uk/pub/databases/chembl/ChEMBL-RDF/",
+        "ChEMBL-RDF"
+      ],
+      "synonyms": [
+        "compound_action_type_chembl",
+        "chembl_compound",
+        "ChEMBL-RDF"
+      ],
+      "dataset": "chembl_compound",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/compound_action_type_chembl",
+      "sourceLabels": [
+        "ChEMBL-RDF"
+      ]
+    },
+    {
+      "id": "compound_biological_role_chebi",
+      "label": "Biological role",
+      "category": "Compound",
+      "description": "Biological roles in ChEBI",
+      "keywords": [
+        "chebi",
+        "classification",
+        "Compound",
+        "compound",
+        "compounds",
+        "drug",
+        "drugs",
+        "chebi_compound",
+        "Chemical Entities of Biological Interest (ChEBI)",
+        "Biological role from ChEBI"
+      ],
+      "synonyms": [
+        "compound_biological_role_chebi",
+        "chebi",
+        "Biological role from ChEBI"
+      ],
+      "dataset": "chebi",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/compound_biological_role_chebi",
+      "sourceLabels": [
+        "Biological role from ChEBI"
+      ]
+    },
+    {
+      "id": "compound_drug_indication_mesh_chembl",
+      "label": "Drug indication",
+      "category": "Compound",
+      "description": "Number of drugs with indications (disease or symptom) categorized in MeSH hierarchy",
+      "keywords": [
+        "chembl_compound",
+        "classification",
+        "Compound",
+        "compound",
+        "compounds",
+        "drug",
+        "drugs",
+        "(More data sources description goes here..)",
+        "ChEMBL-RDF 28.0: http://ftp.ebi.ac.uk/pub/databases/chembl/ChEMBL-RDF/",
+        "Mesh 2021: ftp://ftp.nlm.nih.gov/online/mesh/rdf/",
+        "ChEMBL-RDF"
+      ],
+      "synonyms": [
+        "compound_drug_indication_mesh_chembl",
+        "chembl_compound",
+        "ChEMBL-RDF"
+      ],
+      "dataset": "chembl_compound",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/compound_drug_indication_mesh_chembl",
+      "sourceLabels": [
+        "ChEMBL-RDF"
+      ]
+    },
+    {
+      "id": "compound_drug_development_phase_chembl",
+      "label": "Max drug development phase",
+      "category": "Compound",
+      "description": "Classification based on the <a href=\"https://chembl.gitbook.io/chembl-interface-documentation/frequently-asked-questions/chembl-drug-data-questions#what-is-max-phase\" target=\"_blank\" rel=\"noopener\">max development phase</a> (research stage, phase I-III, and post-launch) of drugs from ChEMBL",
+      "keywords": [
+        "chembl_compound",
+        "classification",
+        "Compound",
+        "compound",
+        "compounds",
+        "drug",
+        "drugs",
+        "ChEMBL-RDF"
+      ],
+      "synonyms": [
+        "compound_drug_development_phase_chembl",
+        "chembl_compound",
+        "ChEMBL-RDF"
+      ],
+      "dataset": "chembl_compound",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/compound_drug_development_phase_chembl",
+      "sourceLabels": [
+        "ChEMBL-RDF"
+      ]
+    },
+    {
+      "id": "compound_atc_classification_pubchem",
+      "label": "PubChem ATC classification",
+      "category": "Compound",
+      "description": "Anatomical Therapeutic Chemical (ATC) Classification in PubChem",
+      "keywords": [
+        "pubchem_compound",
+        "classification",
+        "Compound",
+        "compound",
+        "compounds",
+        "drug",
+        "drugs",
+        "PubChem-RDF: ftp://ftp.ncbi.nlm.nih.gov/pubchem/RDF/ （Version 2021-03-01 ）",
+        "Data for nodes linked to ChEMBL or ChEBI retrieved from https://integbio.jp/rdf/dataset/pubchem",
+        "PubChem"
+      ],
+      "synonyms": [
+        "compound_atc_classification_pubchem",
+        "pubchem_compound",
+        "PubChem"
+      ],
+      "dataset": "pubchem_compound",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/compound_atc_classification_pubchem",
+      "sourceLabels": [
+        "PubChem"
+      ]
+    },
+    {
+      "id": "compound_atc_classification_chembl",
+      "label": "ChEMBL ATC classification",
+      "category": "Compound",
+      "description": "Anatomical Therapeutic Chemical (ATC) Classification in ChEMBL",
+      "keywords": [
+        "chembl_compound",
+        "classification",
+        "Compound",
+        "compound",
+        "compounds",
+        "drug",
+        "drugs",
+        "(More data sources description goes here..)",
+        "ATC: https://bioportal.bioontology.org/ontologies/ATC",
+        "ChEMBL-RDF 28.0: http://ftp.ebi.ac.uk/pub/databases/chembl/ChEMBL-RDF/",
+        "ChEMBL-RDF"
+      ],
+      "synonyms": [
+        "compound_atc_classification_chembl",
+        "chembl_compound",
+        "ChEMBL-RDF"
+      ],
+      "dataset": "chembl_compound",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/compound_atc_classification_chembl",
+      "sourceLabels": [
+        "ChEMBL-RDF"
+      ]
+    },
+    {
+      "id": "glycan_mass_glycosmos",
+      "label": "Molecular mass of glycans",
+      "category": "Glycan",
+      "description": "Molecular weight of glycans from GlyCosmos",
+      "keywords": [
+        "glytoucan",
+        "distribution",
+        "Glycan",
+        "glycan",
+        "glycans",
+        "GlyCosmos"
+      ],
+      "synonyms": [
+        "glycan_mass_glycosmos",
+        "glytoucan",
+        "GlyCosmos"
+      ],
+      "dataset": "glytoucan",
+      "datamodel": "distribution",
+      "api": "https://togodx.dbcls.jp/human/breakdown/glycan_mass_glycosmos",
+      "sourceLabels": [
+        "GlyCosmos"
+      ]
+    },
+    {
+      "id": "glycan_tissue_glycosmos",
+      "label": "Tissues",
+      "category": "Glycan",
+      "description": "Tissues where glycans are expressed",
+      "keywords": [
+        "glytoucan",
+        "classification",
+        "Glycan",
+        "glycan",
+        "glycans",
+        "GlyCosmos"
+      ],
+      "synonyms": [
+        "glycan_tissue_glycosmos",
+        "glytoucan",
+        "GlyCosmos"
+      ],
+      "dataset": "glytoucan",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/glycan_tissue_glycosmos",
+      "sourceLabels": [
+        "GlyCosmos"
+      ]
+    },
+    {
+      "id": "glycan_subsumption_glycosmos",
+      "label": "Subsumption",
+      "category": "Glycan",
+      "description": "The relationship between four levels of glycan types registered in GlyCosmos. For details, see <a href=\"https://glycosmos.org/faq\" target=\"_blank\">the Help page of GlyCosmos</a>.",
+      "keywords": [
+        "glytoucan",
+        "classification",
+        "Glycan",
+        "glycan",
+        "glycans",
+        "GlyCosmos"
+      ],
+      "synonyms": [
+        "glycan_subsumption_glycosmos",
+        "glytoucan",
+        "GlyCosmos"
+      ],
+      "dataset": "glytoucan",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/glycan_subsumption_glycosmos",
+      "sourceLabels": [
+        "GlyCosmos"
+      ]
+    },
+    {
+      "id": "disease_diseases_mondo",
+      "label": "Diseases in Mondo",
+      "category": "Disease",
+      "description": "Disease or disorder categories in the Mondo Disease Ontology (Mondo)",
+      "keywords": [
+        "mondo",
+        "classification",
+        "Disease",
+        "disease",
+        "diseases",
+        "disorder",
+        "disorders",
+        "Mondo Disease Ontology (Mondo)"
+      ],
+      "synonyms": [
+        "disease_diseases_mondo",
+        "mondo",
+        "Mondo Disease Ontology (Mondo)"
+      ],
+      "dataset": "mondo",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/disease_diseases_mondo",
+      "sourceLabels": [
+        "Mondo Disease Ontology (Mondo)"
+      ]
+    },
+    {
+      "id": "disease_diseases_mesh",
+      "label": "Diseases in MeSH",
+      "category": "Disease",
+      "description": "Disease categories in Medical Subject Headings (MeSH)",
+      "keywords": [
+        "mesh",
+        "classification",
+        "Disease",
+        "disease",
+        "diseases",
+        "disorder",
+        "disorders",
+        "Medical Subject Headings (MeSH)"
+      ],
+      "synonyms": [
+        "disease_diseases_mesh",
+        "mesh",
+        "Medical Subject Headings (MeSH)"
+      ],
+      "dataset": "mesh",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/disease_diseases_mesh",
+      "sourceLabels": [
+        "Medical Subject Headings (MeSH)"
+      ]
+    },
+    {
+      "id": "disease_diseases_nando",
+      "label": "Diseases in NANDO",
+      "category": "Disease",
+      "description": "Japanese intractable disease categories in the Nanbyo Disease Ontology (NANDO)",
+      "keywords": [
+        "nando",
+        "classification",
+        "Disease",
+        "disease",
+        "diseases",
+        "disorder",
+        "disorders",
+        "Nanbyo Disease Ontology ver0.4.3: http://nanbyodata.jp/ontology/nando",
+        "Nanbyo Disease Ontology (NANDO)"
+      ],
+      "synonyms": [
+        "disease_diseases_nando",
+        "nando",
+        "Nanbyo Disease Ontology (NANDO)"
+      ],
+      "dataset": "nando",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/disease_diseases_nando",
+      "sourceLabels": [
+        "Nanbyo Disease Ontology (NANDO)"
+      ]
+    },
+    {
+      "id": "disease_related_dbs_mondo",
+      "label": "Cross referenced disease DBs in Mondo",
+      "category": "Disease",
+      "description": "Number of entries linked to Mondo in each of approx. 70 disease related databases from database cross reference in Mondo",
+      "keywords": [
+        "mondo",
+        "classification",
+        "Disease",
+        "disease",
+        "diseases",
+        "disorder",
+        "disorders",
+        "Mondo Disease Ontology (Mondo)"
+      ],
+      "synonyms": [
+        "disease_related_dbs_mondo",
+        "mondo",
+        "Mondo Disease Ontology (Mondo)"
+      ],
+      "dataset": "mondo",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/disease_related_dbs_mondo",
+      "sourceLabels": [
+        "Mondo Disease Ontology (Mondo)"
+      ]
+    },
+    {
+      "id": "disease_phenotypic_abnormality_hpo",
+      "label": "Phenotypic abnormality",
+      "category": "Disease",
+      "description": "Phenotypic abnormality categories of the Human Phenotype Ontology (HPO)",
+      "keywords": [
+        "hp_phenotype",
+        "classification",
+        "Disease",
+        "disease",
+        "diseases",
+        "disorder",
+        "disorders",
+        "hp",
+        "Human Phenotype Ontology (HPO)"
+      ],
+      "synonyms": [
+        "disease_phenotypic_abnormality_hpo",
+        "hp_phenotype",
+        "Human Phenotype Ontology (HPO)"
+      ],
+      "dataset": "hp_phenotype",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/disease_phenotypic_abnormality_hpo",
+      "sourceLabels": [
+        "Human Phenotype Ontology (HPO)"
+      ]
+    },
+    {
+      "id": "disease_inheritance_hpo",
+      "label": "Mode of inheritance",
+      "category": "Disease",
+      "description": "Classification of the Mode of inheritance in Human Phenotype Ontology (HPO)",
+      "keywords": [
+        "mondo",
+        "classification",
+        "Disease",
+        "disease",
+        "diseases",
+        "disorder",
+        "disorders",
+        "Human Phenotype Ontology (HPO)"
+      ],
+      "synonyms": [
+        "disease_inheritance_hpo",
+        "mondo",
+        "Human Phenotype Ontology (HPO)"
+      ],
+      "dataset": "mondo",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/disease_inheritance_hpo",
+      "sourceLabels": [
+        "Human Phenotype Ontology (HPO)"
+      ]
+    },
+    {
+      "id": "variant_gwas_togovar",
+      "label": "GWAS",
+      "category": "Variant",
+      "description": "Classification of statistically significant variants in genome-wide association studies (GWAS) based on associated traits. Obtained from GWAS catalog via TogoVar",
+      "keywords": [
+        "togovar",
+        "classification",
+        "Variant",
+        "variant",
+        "variants",
+        "mutation",
+        "mutations",
+        "GWAS Catalog All associations"
+      ],
+      "synonyms": [
+        "variant_gwas_togovar",
+        "togovar",
+        "GWAS Catalog All associations"
+      ],
+      "dataset": "togovar",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/variant_gwas_togovar",
+      "sourceLabels": [
+        "GWAS Catalog All associations"
+      ]
+    },
+    {
+      "id": "variant_clinical_significance_togovar",
+      "label": "Clinical significance",
+      "category": "Variant",
+      "description": "Variant clinical significance from TogoVar",
+      "keywords": [
+        "togovar",
+        "classification",
+        "Variant",
+        "variant",
+        "variants",
+        "mutation",
+        "mutations",
+        "TogoVar (limited to variants with frequency data in Japanese populations)",
+        "ClinVar"
+      ],
+      "synonyms": [
+        "variant_clinical_significance_togovar",
+        "togovar",
+        "ClinVar"
+      ],
+      "dataset": "togovar",
+      "datamodel": "classification",
+      "api": "https://togodx.dbcls.jp/human/breakdown/variant_clinical_significance_togovar",
+      "sourceLabels": [
+        "ClinVar"
+      ]
+    }
+  ]
+}

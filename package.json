@@ -4,6 +4,8 @@
   "type": "module",
   "scripts": {
     "mcp:togodx": "node mcp/togodx-mcp-server.mjs",
+    "mcp:togodx:http": "node mcp/togodx-mcp-server.mjs --port 3000",
+    "sync:attributes": "node scripts/sync-attribute-catalog.mjs",
     "test": "node --test"
   }
 }

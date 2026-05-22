@@ -1,7 +1,9 @@
 import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
+import http from "node:http";
 import { rankAttributes, findAttributeById } from "./lib/attribute-matcher.mjs";
+import { normalizeAttributeCatalog } from "./lib/attribute-catalog.mjs";
 import { TogoDxClient } from "./lib/togodx-client.mjs";
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
@@ -20,7 +22,7 @@ function loadConfig() {
 
   return {
     ...config,
-    attributes: readJson(attributesPath).attributes
+    attributes: normalizeAttributeCatalog(readJson(attributesPath))
   };
 }
 
@@ -39,19 +41,19 @@ function getToolDefinitions() {
   return [
     {
       name: "start_session",
-      description: "自然言語の探索リクエストから属性候補をランキングし、TogoDX の探索セッションを開始します。",
+      description: "Rank attribute candidates from a natural-language request and start a TogoDX exploration session.",
       inputSchema: {
         type: "object",
         properties: {
-          request: { type: "string", description: "探索したい自然言語の条件。" },
-          dataset: { type: "string", description: "データセット ID。省略時は設定値を使います。" }
+          request: { type: "string", description: "Natural-language request describing what to explore." },
+          dataset: { type: "string", description: "Dataset ID. Uses the configured default when omitted." }
         },
         required: ["request"]
       }
     },
     {
       name: "show_session",
-      description: "現在の選択済み属性、中間ノード、リーフノード数を返します。",
+      description: "Return the currently selected attributes, intermediate nodes, and leaf-node counts.",
       inputSchema: {
         type: "object",
         properties: {
@@ -62,7 +64,7 @@ function getToolDefinitions() {
     },
     {
       name: "search_attributes",
-      description: "自然言語クエリから属性候補を探します。",
+      description: "Search for attribute candidates from a natural-language query.",
       inputSchema: {
         type: "object",
         properties: {
@@ -74,7 +76,7 @@ function getToolDefinitions() {
     },
     {
       name: "search_attribute_values",
-      description: "指定属性に対して /suggest を実行し、中間ノード候補を検索します。",
+      description: "Run /suggest for the selected attribute and return matching intermediate-node candidates.",
       inputSchema: {
         type: "object",
         properties: {
@@ -88,7 +90,7 @@ function getToolDefinitions() {
     },
     {
       name: "browse_attribute",
-      description: "指定属性に対して /breakdown を実行し、内訳や階層を確認します。",
+      description: "Run /breakdown for the selected attribute and inspect its hierarchy or counts.",
       inputSchema: {
         type: "object",
         properties: {
@@ -97,7 +99,7 @@ function getToolDefinitions() {
           nodes: {
             type: "array",
             items: { type: "string" },
-            description: "ブレークダウンの起点にする中間ノード ID 一覧。"
+            description: "Intermediate node IDs to use as the starting point for the breakdown."
           }
         },
         required: ["sessionId", "attributeId"]
@@ -105,7 +107,7 @@ function getToolDefinitions() {
     },
     {
       name: "locate_ids",
-      description: "ユーザーの ID リストを /locate に渡し、対応する中間ノード候補を取得します。",
+      description: "Send a user-provided ID list to /locate and return matching intermediate-node candidates.",
       inputSchema: {
         type: "object",
         properties: {
@@ -121,7 +123,7 @@ function getToolDefinitions() {
     },
     {
       name: "apply_filters",
-      description: "選んだ中間ノードをセッションへ反映し、/aggregate でリーフノード集合を更新します。",
+      description: "Apply selected intermediate nodes to the session and refresh the leaf-node set through /aggregate.",
       inputSchema: {
         type: "object",
         properties: {
@@ -147,7 +149,7 @@ function getToolDefinitions() {
     },
     {
       name: "get_dataframe",
-      description: "現在のセッション状態から /dataframe を実行し、結果表を返します。",
+      description: "Run /dataframe from the current session state and return the resulting table.",
       inputSchema: {
         type: "object",
         properties: {
@@ -155,12 +157,12 @@ function getToolDefinitions() {
           annotations: {
             type: "array",
             items: { type: "string" },
-            description: "表示したい属性 ID。省略時は選択済み属性を使います。"
+            description: "Attribute IDs to include in the output. Uses selected attributes when omitted."
           },
           queries: {
             type: "array",
             items: { type: "string" },
-            description: "明示的に使いたいリーフノード ID。省略時は aggregate 結果を使います。"
+            description: "Leaf-node IDs to use explicitly. Uses the aggregate result when omitted."
           }
         },
         required: ["sessionId"]
@@ -246,7 +248,7 @@ async function callTool(name, args) {
         dataset: session.dataset,
         request: session.request,
         attributeCandidates: session.attributeMatches,
-        nextStep: "search_attribute_values で中間ノード候補を探すか、locate_ids で手元の ID を対応付けてください。"
+        nextStep: "Use search_attribute_values to look for intermediate-node candidates, or use locate_ids to map your own IDs."
       });
     }
     case "show_session": {
@@ -354,23 +356,23 @@ function writeMessage(message) {
   process.stdout.write(payload);
 }
 
-function writeResult(id, result) {
-  writeMessage({
+function createResult(id, result) {
+  return {
     jsonrpc: "2.0",
     id,
     result
-  });
+  };
 }
 
-function writeError(id, error) {
-  writeMessage({
+function createError(id, error) {
+  return {
     jsonrpc: "2.0",
     id,
     error: {
       code: -32000,
       message: error.message
     }
-  });
+  };
 }
 
 async function handleRequest(request) {
@@ -379,7 +381,7 @@ async function handleRequest(request) {
   try {
     switch (method) {
       case "initialize":
-        writeResult(id, {
+        return createResult(id, {
           protocolVersion: SUPPORTED_PROTOCOL_VERSION,
           capabilities: {
             tools: {
@@ -391,22 +393,19 @@ async function handleRequest(request) {
             version: "0.1.0"
           }
         });
-        return;
       case "notifications/initialized":
-        return;
+        return null;
       case "tools/list":
-        writeResult(id, {
+        return createResult(id, {
           tools: getToolDefinitions()
         });
-        return;
       case "tools/call":
-        writeResult(id, await callTool(params.name, params.arguments || {}));
-        return;
+        return createResult(id, await callTool(params.name, params.arguments || {}));
       default:
-        writeError(id, new Error(`Unsupported method: ${method}`));
+        return createError(id, new Error(`Unsupported method: ${method}`));
     }
   } catch (error) {
-    writeError(id, error);
+    return createError(id, error);
   }
 }
 
@@ -434,7 +433,15 @@ function tryConsumeMessage() {
 
   const payload = buffer.subarray(messageStart, messageEnd).toString("utf8");
   buffer = buffer.subarray(messageEnd);
-  handleRequest(JSON.parse(payload));
+  Promise.resolve(handleRequest(JSON.parse(payload)))
+    .then((response) => {
+      if (response) {
+        writeMessage(response);
+      }
+    })
+    .catch((error) => {
+      writeMessage(createError(null, error));
+    });
   return true;
 }
 
@@ -443,3 +450,80 @@ process.stdin.on("data", (chunk) => {
   while (tryConsumeMessage()) {
   }
 });
+
+function getPort() {
+  const flagIndex = process.argv.findIndex((arg) => arg === "--port");
+  if (flagIndex !== -1 && process.argv[flagIndex + 1]) {
+    return Number(process.argv[flagIndex + 1]);
+  }
+
+  if (process.env.TOGODX_MCP_PORT) {
+    return Number(process.env.TOGODX_MCP_PORT);
+  }
+
+  return null;
+}
+
+function sendJson(response, statusCode, payload) {
+  response.writeHead(statusCode, { "content-type": "application/json; charset=utf-8" });
+  response.end(JSON.stringify(payload));
+}
+
+function readBody(request) {
+  return new Promise((resolve, reject) => {
+    const chunks = [];
+    request.on("data", (chunk) => chunks.push(chunk));
+    request.on("end", () => resolve(Buffer.concat(chunks).toString("utf8")));
+    request.on("error", reject);
+  });
+}
+
+async function handleHttpRequest(request, response) {
+  if (request.method === "GET" && request.url === "/health") {
+    sendJson(response, 200, {
+      ok: true,
+      name: "togodx-natural-language",
+      version: "0.1.0"
+    });
+    return;
+  }
+
+  if (request.method !== "POST" || request.url !== "/mcp") {
+    sendJson(response, 404, {
+      error: "Not found",
+      supported: {
+        health: "GET /health",
+        mcp: "POST /mcp"
+      }
+    });
+    return;
+  }
+
+  try {
+    const rawBody = await readBody(request);
+    const rpcRequest = JSON.parse(rawBody);
+    const rpcResponse = await handleRequest(rpcRequest);
+
+    if (!rpcResponse) {
+      response.writeHead(204);
+      response.end();
+      return;
+    }
+
+    sendJson(response, 200, rpcResponse);
+  } catch (error) {
+    sendJson(response, 400, createError(null, error));
+  }
+}
+
+const port = getPort();
+
+if (port) {
+  const server = http.createServer((request, response) => {
+    handleHttpRequest(request, response);
+  });
+
+  server.listen(port, "127.0.0.1", () => {
+    console.error(`TogoDX MCP server listening on http://127.0.0.1:${port}`);
+  });
+}

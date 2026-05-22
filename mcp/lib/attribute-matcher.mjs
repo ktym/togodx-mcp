@@ -8,16 +8,7 @@ const DEFAULT_STOP_WORDS = [
   "for",
   "of",
   "to",
-  "by",
-  "を",
-  "で",
-  "の",
-  "に",
-  "が",
-  "は",
-  "と",
-  "から",
-  "について"
+  "by"
 ];
 
 function normalize(text) {
@@ -44,7 +35,10 @@ function searchableTexts(attribute) {
     attribute.description,
     ...(attribute.keywords || []),
     ...(attribute.synonyms || []),
-    attribute.category
+    attribute.category,
+    attribute.dataset,
+    attribute.datamodel,
+    ...(attribute.sourceLabels || [])
   ]
     .filter(Boolean)
     .map(normalize);

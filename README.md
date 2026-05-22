@@ -1,74 +1,116 @@
 # TogoDX MCP Server
 
-TogoDX の `breakdown` / `suggest` / `locate` / `aggregate` / `dataframe` API を、自然言語で属性候補を探しながら段階的に使うための MCP サーバです。
+An MCP server for the TogoDX `breakdown`, `suggest`, `locate`, `aggregate`, and `dataframe` APIs. It helps clients discover relevant attributes from natural language, refine filters step by step, and finally return a dataframe.
 
-## 構成
+## Components
 
 - `mcp/togodx-mcp-server.mjs`
-  - `stdio` で動く依存なしの MCP サーバ
+  - Dependency-free MCP server supporting `stdio` and optional local HTTP mode
 - `mcp/lib/togodx-client.mjs`
-  - TogoDX API クライアント
+  - Thin TogoDX API client
 - `mcp/lib/attribute-matcher.mjs`
-  - 自然言語クエリから属性候補をランキング
+  - Lightweight natural-language ranking for attributes
+- `mcp/lib/attribute-catalog.mjs`
+  - Normalizes upstream attribute metadata into the local catalog format
+- `scripts/sync-attribute-catalog.mjs`
+  - Builds the local catalog from `togodx-config-human`
 - `config/togodx-mcp.example.json`
-  - API のベース URL、データセット、属性カタログの設定
-- `config/togodx-human.attributes.example.json`
-  - 属性メタデータのサンプル
+  - Example configuration
+- `config/togodx-human.attributes.json`
+  - Generated attribute catalog
 - `test/*.test.mjs`
-  - 最低限のユニットテスト
+  - Basic unit tests
 
-## できること
+## What It Does
 
-- 自然言語から属性候補を探して探索セッションを開始する
-- 属性ごとに `suggest` / `breakdown` / `locate` を呼ぶ
-- 選んだ中間ノードを `aggregate` に渡してリーフノード集合を更新する
-- 最後に `dataframe` を返す
+- Starts an exploration session from a natural-language request
+- Calls `suggest`, `breakdown`, and `locate` for selected attributes
+- Applies intermediate-node filters through `aggregate`
+- Returns a final `dataframe`
 
-## 使い方
+## Setup
 
-1. `config/togodx-human.attributes.example.json` をベースに、実際の属性 ID とラベルを持つカタログ JSON を用意する
-2. `config/togodx-mcp.example.json` をコピーして `baseUrl` と `attributesPath` を環境に合わせて変更する
-3. 必要なら `TOGODX_MCP_CONFIG=/path/to/config.json` を指定して起動する
+1. Generate the attribute catalog if needed:
 
 ```bash
-node mcp/togodx-mcp-server.mjs
+npm run sync:attributes
 ```
 
-`package.json` のスクリプトからでも起動できます。
+2. Copy `config/togodx-mcp.example.json` and adjust `baseUrl` and `attributesPath` for your environment.
+3. Optionally set `TOGODX_MCP_CONFIG=/path/to/config.json`.
+
+For the public service, use:
+
+- `baseUrl`: `https://togodx.dbcls.jp/human`
+- `aggregate`: `https://togodx.dbcls.jp/human/aggregate`
+- `breakdown`: `https://togodx.dbcls.jp/human/breakdown/{attributeId}`
+
+## Running
+
+`stdio` mode:
 
 ```bash
 npm run mcp:togodx
 ```
 
-## ツール一覧
+Local HTTP mode:
+
+```bash
+npm run mcp:togodx:http
+```
+
+or
+
+```bash
+node mcp/togodx-mcp-server.mjs --port 3000
+```
+
+HTTP mode exposes:
+
+- `GET /health`
+- `POST /mcp`
+
+Example calls:
+
+```bash
+curl -X POST http://127.0.0.1:3000/mcp \
+  -H 'content-type: application/json' \
+  -d '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-03-26"}}'
+```
+
+```bash
+curl -X POST http://127.0.0.1:3000/mcp \
+  -H 'content-type: application/json' \
+  -d '{"jsonrpc":"2.0","id":2,"method":"tools/list"}'
+```
+
+```bash
+curl -X POST http://127.0.0.1:3000/mcp \
+  -H 'content-type: application/json' \
+  -d '{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"start_session","arguments":{"request":"Show genes related to Parkinson disease"}}}'
+```
+
+## Tools
 
 - `start_session`
-  - 自然言語の要求から属性候補をランキングしてセッションを作る
+  - Rank attribute candidates from a natural-language request and create a session
 - `show_session`
-  - 選択済みフィルタと現在のリーフノード数を確認する
+  - Return selected filters, attribute candidates, and current leaf-node counts
 - `search_attributes`
-  - 自然言語クエリから属性候補だけを検索する
+  - Search only for matching attributes
 - `search_attribute_values`
-  - 属性に対して `suggest` を実行する
+  - Call `suggest` for a selected attribute
 - `browse_attribute`
-  - 属性に対して `breakdown` を実行する
+  - Call `breakdown` for a selected attribute
 - `locate_ids`
-  - ID リストに対して `locate` を実行する
+  - Call `locate` for a list of user IDs
 - `apply_filters`
-  - 中間ノード選択を `aggregate` に反映する
+  - Update session filters and refresh leaf nodes with `aggregate`
 - `get_dataframe`
-  - 現在のセッションから `dataframe` を返す
+  - Return a dataframe for the current session
 
-## セッションの典型フロー
+## Notes
 
-1. `start_session` に「パーキンソン病に関係する遺伝子を見たい」のような自然言語を渡す
-2. 返ってきた属性候補に対して `search_attribute_values` や `browse_attribute` を呼ぶ
-3. 選んだ中間ノードを `apply_filters` へ渡す
-4. `show_session` でリーフノード数を確認する
-5. `get_dataframe` で選択属性の対応表を返す
-
-## 注意点
-
-- TogoDX サーバに属性一覧 API がない前提で、属性カタログはローカル JSON から読む設計です
-- `suggest` や `locate` のレスポンス形は実サーバ実装に依存するため、必要に応じて `mcp/lib/togodx-client.mjs` の整形を調整してください
-- 今回のサンプル属性カタログは最小構成なので、実運用では 64 属性ぶんのメタデータを入れる前提です
+- The server assumes there is no attribute-list API on the TogoDX side, so it loads a local JSON catalog.
+- Actual response shapes for `suggest`, `locate`, `aggregate`, and `dataframe` may need to be adjusted to match the production API exactly.
+- The Japanese documentation remains available in [README.ja.md](/Users/ktym/git/togodx-mcp/README.ja.md:1).

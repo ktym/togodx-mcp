@@ -4,32 +4,32 @@
       "id": "disease_diseases_nando",
       "label": "Diseases",
       "category": "Disease",
-      "description": "疾患名や疾患分類で絞り込む属性。",
-      "keywords": ["disease", "疾患", "病気", "syndrome"],
+      "description": "Attribute for filtering by disease names and disease classifications.",
+      "keywords": ["disease", "syndrome", "disorder"],
       "synonyms": ["NANDO", "disease ontology"]
     },
     {
       "id": "protein_disease_related_proteins_uniprot",
       "label": "Disease-related proteins",
       "category": "Protein",
-      "description": "疾患関連タンパク質で絞り込む属性。",
-      "keywords": ["protein", "タンパク質", "gene product", "disease related"],
+      "description": "Attribute for filtering by disease-related proteins.",
+      "keywords": ["protein", "gene product", "disease related"],
       "synonyms": ["UniProt", "disease protein"]
     },
     {
       "id": "gene_genes_ncbigene",
       "label": "Genes",
       "category": "Gene",
-      "description": "遺伝子名や遺伝子分類で絞り込む属性。",
-      "keywords": ["gene", "遺伝子", "symbol"],
+      "description": "Attribute for filtering by gene names and gene classifications.",
+      "keywords": ["gene", "symbol"],
       "synonyms": ["NCBI Gene", "gene symbol"]
     },
     {
       "id": "variant_clinvar_clinvar",
       "label": "ClinVar variants",
       "category": "Variant",
-      "description": "ClinVar のバリアント関連属性。",
-      "keywords": ["variant", "バリアント", "mutation", "SNP"],
+      "description": "Variant-related attribute sourced from ClinVar.",
+      "keywords": ["variant", "mutation", "SNP"],
       "synonyms": ["ClinVar", "pathogenic variant"]
     }
   ]

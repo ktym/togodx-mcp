@@ -7,22 +7,22 @@ const attributes = [
     id: "disease_diseases_nando",
     label: "Diseases",
     category: "Disease",
-    description: "疾患属性",
-    keywords: ["disease", "疾患"],
+    description: "Disease attribute",
+    keywords: ["disease", "disorder"],
     synonyms: ["NANDO"]
   },
   {
     id: "gene_genes_ncbigene",
     label: "Genes",
     category: "Gene",
-    description: "遺伝子属性",
-    keywords: ["gene", "遺伝子"],
+    description: "Gene attribute",
+    keywords: ["gene", "symbol"],
     synonyms: ["NCBI Gene"]
   }
 ];
 
 test("rankAttributes matches Japanese keywords", () => {
-  const ranked = rankAttributes("パーキンソン病の疾患を見たい", attributes, 5);
+  const ranked = rankAttributes("show disease annotations for Parkinson disease", attributes, 5);
   assert.equal(ranked[0].id, "disease_diseases_nando");
 });
 
