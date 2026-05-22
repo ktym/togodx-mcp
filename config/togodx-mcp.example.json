@@ -1,5 +1,5 @@
 {
   "baseUrl": "https://togodx.dbcls.jp/human",
-  "dataset": "human",
+  "dataset": "ensembl_gene",
   "attributesPath": "config/togodx-human.attributes.json"
 }

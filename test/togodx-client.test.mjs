@@ -26,5 +26,28 @@ test("aggregate sends dataset and filters", async () => {
   assert.deepEqual(response, { queries: ["A", "B"] });
   assert.equal(calls[0].url, "https://example.org/api/aggregate");
   assert.match(calls[0].options.body, /"dataset":"human"/);
-  assert.match(calls[0].options.body, /"attributeId":"gene_genes_ncbigene"/);
+  assert.match(calls[0].options.body, /"attribute":"gene_genes_ncbigene"/);
+});
+
+test("suggest sends dataset and term query parameter", async () => {
+  const calls = [];
+  const client = new TogoDxClient({
+    baseUrl: "https://example.org/api",
+    dataset: "ensembl_gene",
+    fetchImpl: async (url) => {
+      calls.push(String(url));
+      return {
+        ok: true,
+        json: async () => ({ nodes: [] })
+      };
+    }
+  });
+
+  const response = await client.suggest("disease_mesh_filter", "Parkinson Disease", 10);
+
+  assert.deepEqual(response, { nodes: [] });
+  assert.equal(
+    calls[0],
+    "https://example.org/api/suggest/disease_mesh_filter?dataset=ensembl_gene&term=Parkinson+Disease&limit=10"
+  );
 });

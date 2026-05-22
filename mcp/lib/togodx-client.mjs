@@ -41,7 +41,7 @@ export class TogoDxClient {
   async suggest(attributeId, keyword, limit = 20) {
     const url = new URL(joinUrl(this.baseUrl, `suggest/${attributeId}`));
     url.searchParams.set("dataset", this.dataset);
-    url.searchParams.set("q", keyword);
+    url.searchParams.set("term", keyword);
     url.searchParams.set("limit", String(limit));
 
     const response = await this.fetchImpl(url, {
@@ -73,7 +73,10 @@ export class TogoDxClient {
       method: "POST",
       body: JSON.stringify({
         dataset: this.dataset,
-        filters
+        filters: filters.map((filter) => ({
+          attribute: filter.attributeId || filter.attribute,
+          nodes: filter.nodes
+        }))
       })
     }, this.fetchImpl);
   }

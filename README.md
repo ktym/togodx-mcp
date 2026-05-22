@@ -11,9 +11,9 @@ An MCP server for the TogoDX `breakdown`, `suggest`, `locate`, `aggregate`, and 
 - `mcp/lib/attribute-matcher.mjs`
   - Lightweight natural-language ranking for attributes
 - `mcp/lib/attribute-catalog.mjs`
-  - Normalizes upstream attribute metadata into the local catalog format
+  - Normalizes `attributes.dx-server.json` into local attribute, category, and dataset metadata
 - `scripts/sync-attribute-catalog.mjs`
-  - Builds the local catalog from `togodx-config-human`
+  - Builds the local catalog from `togodx-config-human/config/attributes.dx-server.json`
 - `config/togodx-mcp.example.json`
   - Example configuration
 - `config/togodx-human.attributes.json`
@@ -36,7 +36,7 @@ An MCP server for the TogoDX `breakdown`, `suggest`, `locate`, `aggregate`, and 
 npm run sync:attributes
 ```
 
-2. Copy `config/togodx-mcp.example.json` and adjust `baseUrl` and `attributesPath` for your environment.
+2. Copy `config/togodx-mcp.example.json` and adjust `baseUrl`, `dataset`, and `attributesPath` for your environment.
 3. Optionally set `TOGODX_MCP_CONFIG=/path/to/config.json`.
 
 For the public service, use:
@@ -90,8 +90,21 @@ curl -X POST http://127.0.0.1:3000/mcp \
   -d '{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"start_session","arguments":{"request":"Show genes related to Parkinson disease"}}}'
 ```
 
+The generated catalog preserves:
+
+- Supported life-science categories such as `gene`, `protein`, `disease`, and `variant`
+- Available attributes for each category
+- Primary dataset names such as `ensembl_gene` and `ncbigene`
+- Example IDs and dataset conversion targets
+
 ## Tools
 
+- `show_catalog_overview`
+  - Return supported categories, datasets, and conversion targets
+- `show_category_attributes`
+  - Return attributes available for a category such as `gene` or `disease`
+- `show_dataset_info`
+  - Return dataset metadata, example IDs, and conversion targets for a dataset key such as `ensembl_gene`
 - `start_session`
   - Rank attribute candidates from a natural-language request and create a session
 - `show_session`
@@ -113,4 +126,6 @@ curl -X POST http://127.0.0.1:3000/mcp \
 
 - The server assumes there is no attribute-list API on the TogoDX side, so it loads a local JSON catalog.
 - Actual response shapes for `suggest`, `locate`, `aggregate`, and `dataframe` may need to be adjusted to match the production API exactly.
+- Use only dataset keys from the upstream `datasets` block when you pass `dataset`, especially for the final `dataframe` call.
+- A typical disease-to-gene workflow uses the MeSH disease attribute `disease_diseases_mesh`, resolves a node ID with `search_attribute_values`, and combines it with `dataset: "ensembl_gene"` for `aggregate` and `dataframe`.
 - The Japanese documentation remains available in [README.ja.md](/Users/ktym/git/togodx-mcp/README.ja.md:1).

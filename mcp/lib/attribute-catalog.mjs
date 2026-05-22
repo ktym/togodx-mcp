@@ -14,35 +14,8 @@ function uniqueStrings(values) {
   ));
 }
 
-function englishOnly(values) {
-  return values.filter((value) => isMostlyEnglish(value));
-}
-
-function stripMarkdown(text) {
-  return String(text || "")
-    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
-    .replace(/`([^`]+)`/g, "$1")
-    .replace(/\*\*([^*]+)\*\*/g, "$1")
-    .replace(/\*([^*]+)\*/g, "$1")
-    .replace(/<([^>]+)>/g, "$1")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-function categoryToSubject(category) {
-  const normalized = normalizeText(category);
-  switch (normalized) {
-    case "structure":
-      return "protein structure";
-    case "compound":
-      return "chemical compound";
-    default:
-      return normalized;
-  }
-}
-
-function categoryAliases(category) {
-  const normalized = normalizeText(category);
+function categoryAliases(categoryId, categoryLabel) {
+  const normalized = normalizeText(categoryId || categoryLabel);
   switch (normalized) {
     case "gene":
       return ["gene", "genes", "genetic"];
@@ -61,104 +34,135 @@ function categoryAliases(category) {
     case "variant":
       return ["variant", "variants", "mutation", "mutations"];
     default:
-      return [category];
+      return uniqueStrings([categoryId, categoryLabel]);
   }
 }
 
-function isMostlyEnglish(text) {
-  return !/[\u3040-\u30ff\u3400-\u9fff]/u.test(String(text || ""));
+function englishOnly(values) {
+  return values.filter((value) => !/[\u3040-\u30ff\u3400-\u9fff]/u.test(String(value || "")));
 }
 
-export function parseDataSourcesMarkdown(markdown) {
-  const sectionChunks = String(markdown || "").split(/^## Subject:\s*/m).slice(1);
-  const entries = [];
+function normalizeConversionTargets(conversionValue) {
+  if (!conversionValue) {
+    return [];
+  }
 
-  for (const chunk of sectionChunks) {
-    const [subjectLine, ...restLines] = chunk.split("\n");
-    const subject = stripMarkdown(subjectLine);
-    const attributeChunks = restLines.join("\n").split(/^###\s+/m).slice(1);
+  if (Array.isArray(conversionValue)) {
+    return uniqueStrings(conversionValue.map((entry) => {
+      if (typeof entry === "string") {
+        return entry;
+      }
+      return entry?.target || entry?.dataset || entry?.id || entry?.name || null;
+    }));
+  }
 
-    for (const attributeChunk of attributeChunks) {
-      const [labelLine, ...bodyLines] = attributeChunk.split("\n");
-      const label = stripMarkdown(labelLine);
-      const body = bodyLines.map((line) => line.replace(/\r$/, ""));
+  if (typeof conversionValue === "object") {
+    return Object.keys(conversionValue);
+  }
 
-      let summary = "";
-      let mode = null;
-      const supplementary = [];
-      const sourceLabels = [];
-      const identifierHints = [];
+  return [];
+}
 
-      for (const line of body) {
-        const trimmed = line.trim();
-        if (!trimmed) {
-          continue;
-        }
+function mergeConversionTargets(datasetValue, topLevelConversionValue) {
+  return uniqueStrings([
+    normalizeConversionTargets(topLevelConversionValue),
+    normalizeConversionTargets(datasetValue?.conversion)
+  ]);
+}
 
-        if (!summary && !/^[*-]\s+/.test(trimmed)) {
-          summary = stripMarkdown(trimmed);
-          continue;
-        }
+function normalizeDatasetExamples(datasetValue) {
+  const examples = datasetValue?.examples || datasetValue?.exampleIds || datasetValue?.ids || [];
+  if (Array.isArray(examples)) {
+    return examples;
+  }
+  if (typeof examples === "object" && examples !== null) {
+    return Object.values(examples).flatMap((value) => Array.isArray(value) ? value : [value]);
+  }
+  return [];
+}
 
-        if (/^[*-]\s+Supplementary information/i.test(trimmed)) {
-          mode = "supplementary";
-          continue;
-        }
+export function extractCatalogMetadata(rawCatalog) {
+  if (rawCatalog?.catalog) {
+    return {
+      ...rawCatalog.catalog,
+      categories: Array.isArray(rawCatalog.catalog.categories) ? rawCatalog.catalog.categories : [],
+      datasets: Array.isArray(rawCatalog.catalog.datasets)
+        ? rawCatalog.catalog.datasets.map((dataset) => ({
+          ...dataset,
+          conversionTargets: mergeConversionTargets(dataset.details, dataset.conversionTargets)
+        }))
+        : [],
+      conversion: rawCatalog.catalog.conversion || {}
+    };
+  }
 
-        if (/^[*-]\s+Data sources/i.test(trimmed)) {
-          mode = "sources";
-          continue;
-        }
+  if (Array.isArray(rawCatalog?.attributes)) {
+    const attributes = rawCatalog.attributes;
+    const categoryMap = new Map();
+    const datasetMap = new Map();
 
-        if (/^[*-]\s+Identifier:/i.test(trimmed)) {
-          identifierHints.push(stripMarkdown(trimmed.replace(/^[*-]\s+Identifier:\s*/i, "")));
-          continue;
-        }
-
-        if (/^[*-]\s+(Input\/Output|Query|Input|Output)\b/i.test(trimmed)) {
-          mode = null;
-          continue;
-        }
-
-        if (mode === "supplementary" && /^[*-]\s+/.test(trimmed)) {
-          const value = stripMarkdown(trimmed.replace(/^[*-]\s+/, ""));
-          if (isMostlyEnglish(value)) {
-            supplementary.push(value);
-          }
-          continue;
-        }
-
-        if (mode === "sources" && /^[*-]\s+/.test(trimmed)) {
-          sourceLabels.push(stripMarkdown(trimmed.replace(/^[*-]\s+/, "")));
-        }
+    for (const attribute of attributes) {
+      const categoryId = attribute.categoryId || normalizeText(attribute.category || "").replace(/\s+/g, "_");
+      if (attribute.category && !categoryMap.has(categoryId)) {
+        categoryMap.set(categoryId, {
+          id: categoryId || null,
+          label: attribute.category,
+          attributes: [],
+          attributeCount: 0
+        });
+      }
+      if (attribute.category && categoryMap.has(categoryId)) {
+        categoryMap.get(categoryId).attributes.push(attribute.id);
       }
 
-      entries.push({
-        subject,
-        label,
-        summary,
-        supplementary,
-        sourceLabels,
-        identifierHints
-      });
+      if (attribute.dataset && !datasetMap.has(attribute.dataset)) {
+        datasetMap.set(attribute.dataset, {
+          id: attribute.dataset,
+          label: attribute.dataset,
+          examples: [],
+          conversionTargets: [],
+          details: {}
+        });
+      }
     }
+
+    for (const category of categoryMap.values()) {
+      category.attributeCount = category.attributes.length;
+    }
+
+    return {
+      categories: Array.from(categoryMap.values()),
+      datasets: Array.from(datasetMap.values()),
+      conversion: {}
+    };
   }
 
-  return entries;
+  if (!rawCatalog?.attributes || !Array.isArray(rawCatalog?.categories)) {
+    throw new Error("Unsupported attribute catalog format.");
+  }
+
+  const rawDatasets = rawCatalog.datasets || {};
+  const rawConversion = rawCatalog.conversion || rawCatalog.conversions || {};
+
+  return {
+    categories: rawCatalog.categories.map((category) => ({
+      id: category.id || null,
+      label: category.label || category.id || "",
+      attributes: Array.isArray(category.attributes) ? category.attributes : [],
+      attributeCount: Array.isArray(category.attributes) ? category.attributes.length : 0
+    })),
+    datasets: Object.entries(rawDatasets).map(([id, dataset]) => ({
+      id,
+      label: dataset?.label || dataset?.name || id,
+      examples: normalizeDatasetExamples(dataset),
+      conversionTargets: mergeConversionTargets(dataset, rawConversion[id]),
+      details: dataset
+    })),
+    conversion: rawConversion
+  };
 }
 
-function buildDocsIndex(entries) {
-  return new Map(entries.map((entry) => [
-    `${normalizeText(entry.subject)}::${normalizeText(entry.label)}`,
-    entry
-  ]));
-}
-
-function docsLookup(docsIndex, categoryLabel, attributeLabel) {
-  return docsIndex.get(`${categoryToSubject(categoryLabel)}::${normalizeText(attributeLabel)}`) || null;
-}
-
-export function normalizeAttributeCatalog(rawCatalog, options = {}) {
+export function normalizeAttributeCatalog(rawCatalog) {
   if (Array.isArray(rawCatalog?.attributes)) {
     return rawCatalog.attributes;
   }
@@ -167,47 +171,44 @@ export function normalizeAttributeCatalog(rawCatalog, options = {}) {
     throw new Error("Unsupported attribute catalog format.");
   }
 
-  const docsIndex = buildDocsIndex(parseDataSourcesMarkdown(options.dataSourcesMarkdown || ""));
   const categoryByAttributeId = new Map();
 
   for (const category of rawCatalog.categories) {
     for (const attributeId of category.attributes || []) {
-      categoryByAttributeId.set(attributeId, category.label || category.id);
+      categoryByAttributeId.set(attributeId, {
+        id: category.id || null,
+        label: category.label || category.id || ""
+      });
     }
   }
 
   return Object.entries(rawCatalog.attributes).map(([id, attribute]) => {
-    const category = categoryByAttributeId.get(id) || "";
-    const docsEntry = docsLookup(docsIndex, category, attribute.label);
-    const docsText = uniqueStrings([
-      docsEntry?.summary,
-      docsEntry?.supplementary || []
-    ]);
+    const category = categoryByAttributeId.get(id) || { id: null, label: "" };
+    const sourceLabels = uniqueStrings(englishOnly((attribute.source || []).map((source) => source.label)));
 
     return {
       id,
       label: attribute.label,
-      category,
-      description: docsText[0] || attribute.description || "",
+      category: category.label,
+      categoryId: category.id,
+      description: attribute.description || "",
       keywords: uniqueStrings([
         attribute.dataset,
         attribute.datamodel,
-        category,
-        categoryAliases(category),
-        docsEntry?.identifierHints || [],
-        englishOnly(docsEntry?.sourceLabels || []),
-        englishOnly((attribute.source || []).map((source) => source.label))
+        category.id,
+        category.label,
+        categoryAliases(category.id, category.label),
+        sourceLabels
       ]),
       synonyms: uniqueStrings([
-        docsText.slice(1),
         attribute.api ? [attribute.api.split("/").pop()] : [],
         attribute.dataset,
-        englishOnly((attribute.source || []).map((source) => source.label))
+        sourceLabels
       ]),
       dataset: attribute.dataset || null,
       datamodel: attribute.datamodel || null,
       api: attribute.api || null,
-      sourceLabels: uniqueStrings(englishOnly((attribute.source || []).map((source) => source.label)))
+      sourceLabels
     };
   });
 }

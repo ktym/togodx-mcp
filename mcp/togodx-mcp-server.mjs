@@ -3,7 +3,7 @@ import path from "node:path";
 import crypto from "node:crypto";
 import http from "node:http";
 import { rankAttributes, findAttributeById } from "./lib/attribute-matcher.mjs";
-import { normalizeAttributeCatalog } from "./lib/attribute-catalog.mjs";
+import { extractCatalogMetadata, normalizeAttributeCatalog } from "./lib/attribute-catalog.mjs";
 import { TogoDxClient } from "./lib/togodx-client.mjs";
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
@@ -19,10 +19,12 @@ function loadConfig() {
   const attributesPath = path.isAbsolute(config.attributesPath)
     ? config.attributesPath
     : path.join(ROOT, config.attributesPath);
+  const rawCatalog = readJson(attributesPath);
 
   return {
     ...config,
-    attributes: normalizeAttributeCatalog(readJson(attributesPath))
+    catalog: extractCatalogMetadata(rawCatalog),
+    attributes: normalizeAttributeCatalog(rawCatalog)
   };
 }
 
@@ -39,6 +41,36 @@ function textResponse(payload) {
 
 function getToolDefinitions() {
   return [
+    {
+      name: "show_catalog_overview",
+      description: "Return supported life-science categories, available datasets, and dataset conversion metadata from attributes.dx-server.json.",
+      inputSchema: {
+        type: "object",
+        properties: {}
+      }
+    },
+    {
+      name: "show_category_attributes",
+      description: "List the attributes available for a category such as gene, protein, disease, or variant.",
+      inputSchema: {
+        type: "object",
+        properties: {
+          category: { type: "string", description: "Category ID or label." }
+        },
+        required: ["category"]
+      }
+    },
+    {
+      name: "show_dataset_info",
+      description: "Return dataset details such as example IDs and conversion targets. Dataset names must be keys from the upstream datasets block, such as ensembl_gene or ncbigene.",
+      inputSchema: {
+        type: "object",
+        properties: {
+          dataset: { type: "string", description: "Dataset key from attributes.dx-server.json, such as ensembl_gene." }
+        },
+        required: ["dataset"]
+      }
+    },
     {
       name: "start_session",
       description: "Rank attribute candidates from a natural-language request and start a TogoDX exploration session.",
@@ -178,6 +210,15 @@ function getDataset(sessionDataset) {
   return sessionDataset || config.dataset;
 }
 
+function requireKnownDataset(dataset) {
+  const normalized = getDataset(dataset);
+  const knownDatasets = new Set((config.catalog?.datasets || []).map((entry) => entry.id));
+  if (knownDatasets.size > 0 && !knownDatasets.has(normalized)) {
+    throw new Error(`Unknown dataset: ${normalized}`);
+  }
+  return normalized;
+}
+
 function getClient(dataset) {
   return new TogoDxClient({
     baseUrl: config.baseUrl,
@@ -190,7 +231,7 @@ function createSession(request, dataset) {
   const attributeMatches = rankAttributes(request, config.attributes, 8);
   const session = {
     id: sessionId,
-    dataset: getDataset(dataset),
+    dataset: requireKnownDataset(dataset),
     request,
     filters: [],
     leafNodes: [],
@@ -239,8 +280,50 @@ function annotateFilters(filters) {
   }));
 }
 
+function findCategory(category) {
+  const normalized = String(category || "").toLowerCase();
+  return (config.catalog?.categories || []).find((entry) =>
+    String(entry.id || "").toLowerCase() === normalized
+    || String(entry.label || "").toLowerCase() === normalized
+  ) || null;
+}
+
+function findDatasetInfo(dataset) {
+  return (config.catalog?.datasets || []).find((entry) => entry.id === dataset) || null;
+}
+
 async function callTool(name, args) {
   switch (name) {
+    case "show_catalog_overview": {
+      return textResponse({
+        categories: config.catalog?.categories || [],
+        datasets: (config.catalog?.datasets || []).map((entry) => ({
+          id: entry.id,
+          label: entry.label,
+          examples: entry.examples,
+          conversionTargets: entry.conversionTargets
+        }))
+      });
+    }
+    case "show_category_attributes": {
+      const category = findCategory(args.category);
+      if (!category) {
+        throw new Error(`Unknown category: ${args.category}`);
+      }
+
+      return textResponse({
+        category,
+        attributes: config.attributes.filter((attribute) => category.attributes.includes(attribute.id))
+      });
+    }
+    case "show_dataset_info": {
+      const dataset = findDatasetInfo(args.dataset);
+      if (!dataset) {
+        throw new Error(`Unknown dataset: ${args.dataset}`);
+      }
+
+      return textResponse(dataset);
+    }
     case "start_session": {
       const session = createSession(args.request, args.dataset);
       return textResponse({
