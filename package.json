@@ -1,0 +1,9 @@
+{
+  "name": "togodx-mcp",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "mcp:togodx": "node mcp/togodx-mcp-server.mjs",
+    "test": "node --test"
+  }
+}

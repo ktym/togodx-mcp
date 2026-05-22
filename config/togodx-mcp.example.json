@@ -1,0 +1,5 @@
+{
+  "baseUrl": "https://togodx.dbcls.jp/api/human",
+  "dataset": "human",
+  "attributesPath": "config/togodx-human.attributes.example.json"
+}
